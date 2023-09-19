@@ -21,7 +21,6 @@ jobs:
             git config user.email "ECCRedM-Media@gmail.com"
             git add xiv.md
             git commit -m "Update xiv.md"  # Use -m to provide a commit message
-            git push
             IFS=',' read -r var1 var2 var3 < "xiv.md" #var1 is title, var2 is url, var3 is partial path
             wget -o ${var3#sharing/2022/wk*/}.m4a $var2
             if [ -e media/$var3.m4a ]; then
