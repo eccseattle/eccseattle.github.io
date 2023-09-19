@@ -1,0 +1,43 @@
+name: Check Google Drive File
+
+on:
+  schedule:
+    - cron: '*/6 * * * *' # Runs every hour on the hour, to disable, change to 1 1 *
+
+jobs:
+  update_md_file:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Commit and Push Changes
+        run: |
+          wget https://raw.githubusercontent.com/2010johnlee/2010johnlee.github.io/main/temp.md
+
+          if ! cmp -s xiv.md temp.md; then
+            mv temp.md xiv.md
+            IFS=',' read -r var1 var2 var3 < "xiv.md" #var1 is title, var2 is url, var3 is partial path
+            wget -o ${var3#sharing/2022/wk*/}.m4a $var2
+            if [ -e media/$var3.m4a ]; then
+              echo "File already exists." >> log.md
+              TZ="America/Los_Angeles" date >> log.md
+              git config user.name "ECCRedM-Media"
+              git config user.email "ECCRedM-Media@gmail.com"
+              git add log.md
+              git commit -m "Update log.md"  # Use -m to provide a commit message
+              git push
+            else
+              mv ${var3#sharing/2022/wk*/}.m4a media/$var3.m4a
+              echo "File updated." >> log.md
+              TZ="America/Los_Angeles" date >> log.md
+              git config user.name "ECCRedM-Media"
+              git config user.email "ECCRedM-Media@gmail.com"
+              git add media/$var3.m4a  # Stage the changes
+              git commit -m "Update media/$var3.m4a"  # Use -m to provide a commit message
+              git add log.md
+              git commit -m "Update log.md"  # Use -m to provide a commit message
+              git push
+           fi
+          fi
+
