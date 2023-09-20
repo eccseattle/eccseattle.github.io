@@ -23,8 +23,7 @@ jobs:
       - name: Commit and Push Changes
         run: |
           wget https://raw.githubusercontent.com/2010johnlee/2010johnlee.github.io/main/temp.md
-          chmod +x scripts/check_time.py
-          var3=$(python scripts/check_time.py)
+          var3=$(python check_time.py)
           if ! cmp -s xiv.md temp.md; then
             mv temp.md xiv.md
             git config user.name "ECCRedM-Media"
