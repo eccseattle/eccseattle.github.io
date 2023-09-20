@@ -28,12 +28,12 @@ jobs:
           echo "python script loaded $var3"
           if ! cmp -s xiv.md temp.md; then
             echo "temp.md is new"
+            IFS=',' read -r var1 var2 < temp.md
+            echo "$var1 is title"
+            echo "$var2 is url"
+            echo "$var3 is partial path"
             mv temp.md xiv.md
             echo "update xiv.md to temp.md"
-            IFS=',' read -r var1 var2 < "xiv.md" #var1 is title, var2 is url, var3 is partial path
-            echo $var1
-            echo $var2
-            echo $var3
             echo ${var3#sharing/2022/wk*/}.m4a
             wget -O ${var3#sharing/2022/wk*/}.m4a $var2
             git config user.name "ECCRedM-Media"
