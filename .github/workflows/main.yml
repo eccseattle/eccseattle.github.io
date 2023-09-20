@@ -35,7 +35,7 @@ jobs:
             echo $var2
             echo $var3
             echo ${var3#sharing/2022/wk*/}.m4a
-            wget -o ${var3#sharing/2022/wk*/}.m4a $var2
+            wget -O ${var3#sharing/2022/wk*/}.m4a $var2
             if [ -e media/$var3.m4a ]; then
               echo "File already exists." >> log.md
               TZ="America/Los_Angeles" date >> log.md
