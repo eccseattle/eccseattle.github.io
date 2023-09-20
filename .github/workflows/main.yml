@@ -33,7 +33,7 @@ jobs:
             echo "$var2 is url"
             echo "$var3 is partial path"
             mv temp.md xiv.md
-            echo "update xiv.md to temp.md"
+            echo "replaced xiv.md with temp.md"
             echo ${var3#sharing/2022/wk*/}.m4a
             wget -O ${var3#sharing/2022/wk*/}.m4a $var2
             git config user.name "ECCRedM-Media"
