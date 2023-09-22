@@ -11,6 +11,7 @@ current_time = datetime.datetime.now(pacific_timezone)
 # Get the current hour
 current_hour = current_time.hour
 current_day_date = current_time.strftime('%Y-%m-%d')
+
 # Check if the current hour is between 21 (9 PM) and 8 (8 AM next day)
 if current_hour >= 12:
     # If it is, calculate and return the date of the next day
@@ -19,15 +20,18 @@ if current_hour >= 12:
     load_date = next_day_date
 else:
     load_date = current_day_date
-
+    
+# Check if the calculated load_date is a Sunday
+if datetime.datetime.strptime(load_date, '%Y-%m-%d').weekday() == 6:  # Sunday is 6 in the `weekday()` method
+    # If it's Sunday, add one more day
+    next_day = datetime.datetime.strptime(load_date, '%Y-%m-%d') + datetime.timedelta(days=1)
+    load_date = next_day.strftime('%Y-%m-%d')
+    
 # Load the lookup table (replace 'lookup_table.csv' with the actual file path)
 lookup_table = pd.read_csv('lookup_table.csv', dtype={'item1': str})
 
 # Update the 'date_column' variable with the correct column name from your dataset
 date_column = 'date_column'  # Replace 'actual_date_column_name' with the real column name
-
-# Get the current date (you can replace this with your method to obtain the date)
-# load_date = '2023-09-18'  # Example date format (YYYY-MM-DD)
 
 # Filter the table based on the current date
 filtered_row = lookup_table[lookup_table[date_column] == load_date]
