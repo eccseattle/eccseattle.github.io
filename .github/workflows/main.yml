@@ -40,7 +40,7 @@ jobs:
             git config user.email "ECCRedM-Media@gmail.com"
             git add xiv.md
             git commit -m "Update xiv.md"  # Use -m to provide a commit message
-            if [ -e media/$var3.md ]; then
+            if [ -e media/$var3.m4a ]; then
               echo "<br />File already exists." >> log.md
               TZ="America/Los_Angeles" date >> log.md
               git config user.name "ECCRedM-Media"
@@ -49,14 +49,13 @@ jobs:
               git commit -m "Update log.md"  # Use -m to provide a commit message
               git push
             else
-              cp xiv.md media/$var3.md
-              sed -i 's/\\//g' media/$var3.md
+              wget -O media/$var3.m4a $var2
               echo "<br />File updated." >> log.md
               TZ="America/Los_Angeles" date >> log.md
               git config user.name "ECCRedM-Media"
               git config user.email "ECCRedM-Media@gmail.com"
-              git add media/$var3.md  # Stage the changes
-              git commit -m "Update media/$var3.md"  # Use -m to provide a commit message
+              git add media/$var3.m4a  # Stage the changes
+              git commit -m "Update media/$var3.m4a"  # Use -m to provide a commit message
               git add log.md
               git commit -m "Update log.md"  # Use -m to provide a commit message
               git push
